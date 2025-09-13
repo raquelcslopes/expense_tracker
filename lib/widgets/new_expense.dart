@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:expense_tracker/models/expense.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({required this.onAddExpense, super.key});
+
+  final void Function(Expense expense) onAddExpense;
 
   @override
   State<NewExpense> createState() {
@@ -34,6 +36,46 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  void _submitExpenseData() {
+    //converts the string in number
+    final enteredAmount = double.tryParse(_amountController.text);
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('Invalid input'),
+          content: Text(
+            'Please make sure a valid title, amount, date and category was entered',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: Text('Okay'),
+            ),
+          ],
+        ),
+      );
+      //make sure that no code after this is executed
+      return;
+    }
+
+    widget.onAddExpense(
+      Expense(
+        title: _titleController.text,
+        amount: enteredAmount,
+        date: _selectedDate!,
+        category: _selectedCategory,
+      ),
+    );
+    Navigator.pop(context);
+  }
+
   //tells flutter this controller it is not needed anymore, so it can clean the memory
   @override
   void dispose() {
@@ -45,7 +87,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(context) {
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.fromLTRB(16, 48, 16, 16),
       child: Column(
         children: [
           TextField(
@@ -88,6 +130,7 @@ class _NewExpenseState extends State<NewExpense> {
               ),
             ],
           ),
+          SizedBox(height: 18),
           Row(
             children: [
               DropdownButton(
@@ -109,7 +152,11 @@ class _NewExpenseState extends State<NewExpense> {
                   });
                 },
               ),
-              ElevatedButton(onPressed: () {}, child: Text('Save expense')),
+              Spacer(),
+              ElevatedButton(
+                onPressed: _submitExpenseData,
+                child: Text('Save expense'),
+              ),
               SizedBox(width: 5),
               TextButton(
                 onPressed: () {
