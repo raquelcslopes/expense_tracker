@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 //k for global variables
 var kColorScheme = ColorScheme.fromSeed(
-  seedColor: Color.fromARGB(255, 96, 59, 181),
+  seedColor: Color(0xFFC7B198),
 );
 
 var kDarkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark, //tells it is scheme for dark mode
-  seedColor: Color.fromARGB(255, 5, 99, 125),
+  seedColor: Color(0xFF142D4C),
 );
 
 void main() {
@@ -34,7 +34,7 @@ void main() {
           foregroundColor: kColorScheme.primaryContainer,
         ),
         cardTheme: CardThemeData().copyWith(
-          color: kColorScheme.secondaryContainer,
+          color: Color(0xFFC7B198),
           margin: EdgeInsets.all(10),
         ),
         //has no copyWith method, we have to create a new object

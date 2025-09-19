@@ -40,14 +40,7 @@ class Chart extends StatelessWidget {
       height: 180,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.primary,
-          ],
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
-        ),
+        color: Color(0xFF596E79),
       ),
       child: Column(
         children: [
@@ -74,8 +67,8 @@ class Chart extends StatelessWidget {
                       child: Icon(
                         CategoryIcons[bucket.category],
                         color: isDarkMode
-                            ? Theme.of(context).colorScheme.secondary
-                            : Theme.of(context).colorScheme.primary,
+                            ? Color(0xFFF0ECE2)
+                            : Color(0xFFDFD3C3),
                       ),
                     ),
                   ),
